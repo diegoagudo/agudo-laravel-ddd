@@ -6,7 +6,8 @@ first-time:           ## Execute the first start of the project
 	@cp -pR ./www/.env.example ./www/.env
 	@docker-compose -f ./docker-compose.yml up --build -d
 	@docker-compose -f ./docker-compose.yml exec web sh -c 'composer install'
-	@docker-compose -f ./docker-compose.yml exec web sh -c 'php artisan migrate && php artisan db:seed && php artisan test'
+	@echo "Creating and populating tables..."
+	@sleep 4 && docker-compose -f ./docker-compose.yml exec web sh -c 'php artisan migrate && php artisan db:seed && php artisan test'
 
 ps:                   ## List all containers
 	@docker-compose -f ./docker-compose.yml ps
