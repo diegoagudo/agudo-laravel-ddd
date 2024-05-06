@@ -1,0 +1,47 @@
+version: "3.8"
+services:
+  web:
+    container_name: "agudo-laravel-ddd-php"
+    ports:
+      - "80:80"
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    restart: always
+    volumes:
+      - ./www/:/var/www/html
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - agudo-laravel-ddd-network
+
+  redis:
+    container_name: "agudo-laravel-ddd-redis"
+    ports:
+      - "6379:6379"
+    build:
+      context: .
+      dockerfile: ./docker/redis/Dockerfile
+    restart: always
+    networks:
+      - agudo-laravel-ddd-network
+
+  mysql:
+    container_name: "agudo-laravel-ddd-mysql"
+    image: mysql:8.3
+    restart: always
+    platform: linux/amd64
+    tty: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: root      
+    networks:
+      - agudo-laravel-ddd-network
+
+networks:
+    agudo-laravel-ddd-network:
+        driver: bridge
+        external: true

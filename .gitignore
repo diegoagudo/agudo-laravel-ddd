@@ -1,0 +1,4 @@
+.idea
+.env
+www/.phpunit.cache
+www/.phpunit.cache/*x

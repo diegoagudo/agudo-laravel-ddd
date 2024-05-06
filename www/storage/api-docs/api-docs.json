@@ -1,0 +1,356 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel with DDD",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost"
+        }
+    ],
+    "paths": {
+        "/api": {},
+        "/api/city/create": {
+            "post": {
+                "tags": [
+                    "city"
+                ],
+                "summary": "Adds a new city",
+                "description": "<br />\n     * States alloweds: **SP**, **MG**, **MT**, **RS** and others... <br />\n     * Timezones alloweds: **BRT**, **EZT**, **EET** and **FJT** <br />",
+                "operationId": "9da45e4c5588d79fe8123618c03a7827",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "birthdate": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "population": {
+                                        "type": "integer"
+                                    },
+                                    "salaryAvg": {
+                                        "type": "number",
+                                        "format": "double"
+                                    },
+                                    "timezone": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Sao Paulo",
+                                    "description": "Descricao de Sampa",
+                                    "birthdate": "1800-01-01",
+                                    "population": 123,
+                                    "salaryAvg": 323,
+                                    "state": "SP",
+                                    "timezone": "BRT"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "message": {
+                                                            "type": "string",
+                                                            "example": "The name field is required."
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The name field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/city/search": {
+            "get": {
+                "tags": [
+                    "city"
+                ],
+                "summary": "Search cities",
+                "description": "Search for cities",
+                "operationId": "6f061cb14c4b6914020491c902e020cd",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "example": "Sao Paulo"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "example": "Terra da garoa"
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "example": "SP"
+                    },
+                    {
+                        "name": "populationInitial",
+                        "in": "query",
+                        "example": "1"
+                    },
+                    {
+                        "name": "populationEnd",
+                        "in": "query",
+                        "example": "9999"
+                    },
+                    {
+                        "name": "birthdateInitial",
+                        "in": "query",
+                        "example": "1500-01-01"
+                    },
+                    {
+                        "name": "birthdateEnd",
+                        "in": "query",
+                        "example": "1600-01-01"
+                    },
+                    {
+                        "name": "salaryInitial",
+                        "in": "query",
+                        "example": "20000"
+                    },
+                    {
+                        "name": "salaryEnd",
+                        "in": "query",
+                        "example": "30000"
+                    },
+                    {
+                        "name": "timezone",
+                        "in": "query",
+                        "example": "BRT"
+                    },
+                    {
+                        "name": "sortField",
+                        "in": "query",
+                        "example": "name"
+                    },
+                    {
+                        "name": "sortDirection",
+                        "in": "query",
+                        "example": "desc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "number"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Sao Paulo"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "Terra da garoa"
+                                                            },
+                                                            "state": {
+                                                                "type": "string",
+                                                                "example": "SP"
+                                                            },
+                                                            "birthdate": {
+                                                                "type": "string",
+                                                                "format": "date",
+                                                                "example": "1600-02-02"
+                                                            },
+                                                            "population": {
+                                                                "type": "integer",
+                                                                "example": "2000000"
+                                                            },
+                                                            "salary_avg": {
+                                                                "type": "number",
+                                                                "format": "double",
+                                                                "example": "20000.23"
+                                                            },
+                                                            "timezone": {
+                                                                "type": "string",
+                                                                "example": "BRT"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "first_page_url": {
+                                                    "type": "string",
+                                                    "example": "?page=1"
+                                                },
+                                                "from": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "last_page": {
+                                                    "type": "number",
+                                                    "example": "3"
+                                                },
+                                                "last_page_url": {
+                                                    "type": "string",
+                                                    "example": "?page=3"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "format": "nullable"
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "&laquo; Previous"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "next_page_url": {
+                                                    "type": "string",
+                                                    "example": "?page=2"
+                                                },
+                                                "path": {
+                                                    "type": "string"
+                                                },
+                                                "per_page": {
+                                                    "type": "number",
+                                                    "example": "15"
+                                                },
+                                                "prev_page_url": {
+                                                    "type": "string",
+                                                    "format": "nullable"
+                                                },
+                                                "to": {
+                                                    "type": "number",
+                                                    "example": "15"
+                                                },
+                                                "total": {
+                                                    "type": "number",
+                                                    "example": "40"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "birthdate": {
+                                                            "type": "string",
+                                                            "example": "The birthdate initial field is required when birthdate end is present."
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The birthdate initial field is required when birthdate end is present."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "message": {
+                                                            "type": "string",
+                                                            "example": "Content not found. Please, change your filter and try again."
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Content not found. Please, change your filter and try again."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
